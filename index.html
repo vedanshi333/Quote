@@ -1,0 +1,142 @@
+
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Random Quote Generator</title>
+<style>
+	
+	@import url('https://fonts.googleapis.com/css2?family=Luxurious+Roman&family=Merriweather:wght@700&display=swap');
+	body {
+		background: linear-gradient(to right, #47B6FD,yellow);
+		font-family: 'Merriweather', serif;
+	}
+	.container {
+		width: 70%;
+		height: auto;
+		position: absolute;
+		left: 0px;
+		right: 0px;
+		margin: auto;
+		margin-top: 120px;
+		text-align: center;
+	}
+	.title {
+		font-size: 30px;
+		color: white;
+	}
+	.quote-container {
+		width: 80%;
+		max-height: auto;
+		min-height: 200px;
+		background-color: rgba(255,255,255, .20);
+		position: relative;
+		left: 0px;
+		right: 0px;
+		margin: auto;
+		margin-top: 20px;
+		margin-bottom: 10px;
+		border-radius: 8px;
+		padding: 30px;
+		text-align: left;
+	}
+	.quote {
+		color: #133269;
+		font-size: 30px;
+		font-weight: 400;
+		font-family: 'Luxurious Roman', cursive;
+	}
+	.auther {
+		margin-top: 15px;
+		color: #133269;
+	}
+	.auther a {
+		text-decoration: none;
+		font-size: 18px;
+		color: #133269;
+	}
+	button {
+		border: 0px;
+		background-color: white;
+		width: 150px;
+		height: 40px;
+		margin-top: 10px;
+		color: #133269;
+		font-family: 'Merriweather', serif;
+		cursor: pointer;
+		border-radius: 4px;
+		position: relative;
+		padding-left: 30px;
+		outline: none;
+	}
+	button:active {
+		border: 1px solid #133269;
+	}
+	button svg {
+		position: absolute;
+		top: 8px;
+		left: 40px;
+		fill: #133269;
+	}
+	#next {
+		margin-right: 30px;
+	}
+	#next svg {
+		top: 2px;
+		left: 17px;
+		transform: rotate(180deg);
+	}
+</style>
+
+
+</head> 
+
+<body>
+	<div class="container">
+		<div class="title">Random Quote Generator</div>
+		<div class="quote-container">
+			<div class="quote">This is the random quote generator app.</div>
+			<div class="auther">Auther: <a href="" target="_blank">Link</a></div>
+		</div>
+		<button id="next">
+			<svg xmlns="http://www.w3.org/2000/svg" height="34px" viewBox="0 0 24 24" width="34px" fill="#000000"><path d="M0 0h24v24H0z" fill="none"/><path d="M6 17h3l2-4V7H5v6h3zm8 0h3l2-4V7h-6v6h3z"/></svg>
+			<span>Next Quote</span>
+		</button>
+	</div>
+</body>
+
+
+<script>
+	window.onload = showQuote;
+var quote = document.querySelector('.quote')
+var link = document.querySelector('.auther a')
+var btn = document.querySelector('#next')
+var share = document.querySelector('#share')
+btn.onclick = function(){
+	showQuote();
+}
+function showQuote(){
+quote.innerHTML = 'Loading...';
+link.innerHTML = '...';
+const data = null;
+
+const xhr = new XMLHttpRequest();
+xhr.withCredentials = true;
+
+xhr.addEventListener("readystatechange", function () {
+	if (this.readyState === this.DONE) {
+		var response = JSON.parse(this.responseText);
+		quote.innerHTML = response.content;
+		console.log(response);
+		link.innerHTML = response.originator.name;
+	}
+});
+
+xhr.open("GET", "https://quotes15.p.rapidapi.com/quotes/random/");
+xhr.setRequestHeader("x-rapidapi-host", "quotes15.p.rapidapi.com");
+xhr.setRequestHeader("x-rapidapi-key", "24be8c3b58msh73ce604f8f56c19p17a6e6jsnb61b599b5041");
+
+xhr.send(data);
+}
+</script>
+</html>
